@@ -1,25 +1,31 @@
 #!/usr/bin/bash
-GAME="/media/${USER}/Data/games/${FOLDER}"
-LAUNCH_GAME="env LUTRIS_SKIP_INIT=1 lutris lutris:rungameid/${ID}"
 INFO=$1
 if [ -z "$1" ]
   then
-      $LAUNCH_GAME
+      echo "Pick a config!"
     exit 0
 fi
 CONFIG="/home/${USER}/.secrets/launch_wow.config"
 L=$(grep -Fin $INFO $CONFIG | head -1 | cut --delimiter=":" --fields=1)
 INFO=$(sed -n ${L}p $CONFIG)
 L=$((L+1))
+GAME_FOLDER=$(sed -n ${L}p $CONFIG)
+L=$((L+1))
+REALMLIST_REL_PATH=$(sed -n ${L}p $CONFIG)
+L=$((L+1))
+LAUNCH_CMD=$(sed -n ${L}p $CONFIG)
+L=$((L+1))
 REALMLIST=$(sed -n ${L}p $CONFIG)
 L=$((L+1))
-USER=$(sed -n ${L}p $CONFIG)
+USERNAME=$(sed -n ${L}p $CONFIG)
 L=$((L+1))
 PASSWORD=$(sed -n ${L}p $CONFIG)
-echo Changing Realmlist.wtf to $REALMLIST
-echo $REALMLIST > "${GAME}/Data/enUS/realmlist.wtf"
-sleep 12 && xdotool type $USER & 
+if [ $# -eq 1 ]; then
+    echo Changing Realmlist.wtf to $REALMLIST
+    echo $REALMLIST > "${GAME_FOLDER}/${REALMLIST_REL_PATH}"
+fi
+sleep 12 && xdotool type $USERNAME & 
 sleep 13 && xdotool key Tab && xdotool type $PASSWORD &
 sleep 14 && xdotool key KP_Enter &
-echo "Launching ${INFO} WoW.exe autologin in 20 seconds"
-$LAUNCH_GAME
+echo "Launching ${INFO} WoW.exe autologin in 12 seconds"
+$LAUNCH_CMD

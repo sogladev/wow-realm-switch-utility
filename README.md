@@ -31,35 +31,46 @@ the credentials as you would on a keyboard with `xdotool` after a set delay to
 the window with focus.
 
 ## Setup
-Find game ID (`${ID}`) with
- ```
- lutris -l
- ```
+3 files need to be setup: .bash_alias, a launch_wow.sh script and launch_wow.config script.
 
-`launch_wow.sh`
-Change `GAME`, `LAUNCH_GAME` and `sleep` timers as needed
-```
-GAME="/media/${USER}/Data/games/${FOLDER}"
-LAUNCH_GAME="env LUTRIS_SKIP_INIT=1 lutris lutris:rungameid/${ID}"
-```
+Adding or removing requires setting up a new alias and adding the configuration to the config file.
 
-`launch_wow.config`
+### `launch_wow.config`
+Each line respectively contains: description, game_folder, realmlist_rel_path, launch_cmd, realmlist, username, passwd
+
+
 ```
-Henhouse <-- String to reference in .bash_aliases
-set realmlist pvp.henhou.se
+Local <-- string to reference in launch_wow.sh
+/media/jelle/Data/games/wow335 <-- game folder containing WoW.exe
+Data/enUS/realmlist.wtf  <-- relative path to game folder
+env LUTRIS_SKIP_INIT=1 lutris lutris:rungameid/2
+set realmlist 127.0.0.1
 myusername
 mypassword
 ```
 
-`$ cat .bash_aliases`
+`env LUTRIS_SKIP_INIT=1 lutris lutris:rungameid/2` may be replaced with `wine wow.exe`
+
+Find game ID (for `rungameid/2`) with
+ ```
+ lutris -l
+ ```
+
+### `.bash_aliases`
+Set a 2nd argument to skip writing realmlist. `.launch_wow.config` must contain a line for 
 ```
-alias WOWH="export ID=3; export FOLDER=wow112;/home/${USER}/scripts/launch_wow.sh Henhouse"
+alias WOWL="/home/${USER}/scripts/launch_wow.sh Local"
+alias WOWM="/home/${USER}/scripts/launch_wow.sh Mistblade skip_write_realmlist"
 ```
+
+### `launch_wow.sh`
+Change `sleep` timers as needed
+
 
 ## Usage
 Open shell and type an alias
 ```
-$ WOWH
+$ WOWL
 ```
 then keep focus and wait for autologin
 
