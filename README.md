@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/SoglaHash/wow-autologin">
+  <a href="https://github.com/Ella36/wow-autologin">
     <img src="logo192.png" alt="Logo" width="80" height="80">
   </a>
 
