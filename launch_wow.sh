@@ -5,7 +5,7 @@ if [ -z "$1" ]
       echo "Pick a config!"
     exit 0
 fi
-CONFIG="/home/${USER}/.secrets/launch_wow.config"
+CONFIG="${HOME}/.secrets/launch_wow.config"
 L=$(grep -Fin $INFO $CONFIG | head -1 | cut --delimiter=":" --fields=1)
 INFO=$(sed -n ${L}p $CONFIG)
 L=$((L+1))
@@ -24,8 +24,9 @@ if [ $# -eq 1 ]; then
     echo Changing Realmlist.wtf to $REALMLIST
     echo $REALMLIST > "${GAME_FOLDER}/${REALMLIST_REL_PATH}"
 fi
-sleep 12 && xdotool type $USERNAME & 
-sleep 13 && xdotool key Tab && xdotool type $PASSWORD &
-sleep 14 && xdotool key KP_Enter &
+# Optional xdotool to input username and password
+# sleep 12 && xdotool type $USERNAME &
+# sleep 13 && xdotool key Tab && xdotool type $PASSWORD &
+# sleep 14 && xdotool key KP_Enter &
 echo "Launching ${INFO} WoW.exe autologin in 12 seconds"
 $LAUNCH_CMD

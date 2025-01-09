@@ -1,5 +1,0 @@
-alias WOWC="/home/${USER}/scripts/launch_wow.sh Chromiecraft"
-alias WOWW="/home/${USER}/scripts/launch_wow.sh Warmane"
-alias WOWL="/home/${USER}/scripts/launch_wow.sh Local"
-alias WOWT="/home/${USER}/scripts/launch_wow.sh Turtle"
-alias WOWH="/home/${USER}/scripts/launch_wow.sh Henhouse"

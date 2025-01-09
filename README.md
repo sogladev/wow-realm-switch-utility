@@ -1,14 +1,4 @@
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/Ella36/wow-autologin">
-    <img src="logo192.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Autologin WoW lutris/wine</h3>
-</div>
-
-# Autologin WoW lutris/wine
+# Bash realm switcher and autologin
 This project allows to set aliases in `.bash_aliases` to load a config and
 launch the chosen version of wow, set realmlist and auto-login
 
@@ -20,18 +10,13 @@ graph TD;
     cmd[$ WOWC]
 ```
 
-![GUI Screenshot][gui-screenshot]
-
-## Requirements
-A version of WoW installed and able to run a launch command with wine/lutris/..
-
 ## Warning
-This script does `NOT` send keystrokes to a specific `WoW.exe` window. It types
+⚠️ If autologin is enabled, this script does `NOT` send keystrokes to a specific `WoW.exe` window. It types
 the credentials as you would on a keyboard with `xdotool` after a set delay to
 the window with focus.
 
 ## Setup
-3 files need to be setup: .bash_alias, a launch_wow.sh script and launch_wow.config script.
+3 files need to be setup: `.bash_alias`, a `launch_wow.sh` script and `launch_wow.config` script.
 
 Adding or removing requires setting up a new alias and adding the configuration to the config file.
 
@@ -59,13 +44,12 @@ Find game ID (for `rungameid/2`) with
 ### `.bash_aliases`
 Set a 2nd argument to skip writing realmlist. `.launch_wow.config` must contain a line for 
 ```
-alias WOWL="/home/${USER}/scripts/launch_wow.sh Local"
-alias WOWM="/home/${USER}/scripts/launch_wow.sh Mistblade skip_write_realmlist"
+alias WOWL="${HOME}/scripts/launch_wow.sh Local"
+alias WOWM="${HOME}/scripts/launch_wow.sh Mistblade skip_write_realmlist"
 ```
 
 ### `launch_wow.sh`
 Change `sleep` timers as needed
-
 
 ## Usage
 Open shell and type an alias
@@ -73,5 +57,3 @@ Open shell and type an alias
 $ WOWL
 ```
 then keep focus and wait for autologin
-
-[gui-screenshot]: ./screenshot.png
