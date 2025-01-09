@@ -4,4 +4,3 @@ alias WOWL="${HOME}/scripts/wow_launch.sh Local"
 alias WOWLHD="${HOME}/scripts/wow_launch.sh LocalHD"
 alias WOWLC="${HOME}/scripts/wow_launch.sh CMangos"
 alias WOWLT="${HOME}/scripts/wow_launch.sh Trinity"
-

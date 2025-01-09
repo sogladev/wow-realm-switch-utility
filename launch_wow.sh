@@ -1,11 +1,21 @@
-#!/usr/bin/bash
-INFO=$1
-if [ -z "$1" ]
-  then
-      echo "Pick a config!"
-    exit 0
-fi
+#!/usr/bin/sh
 CONFIG="${HOME}/.secrets/launch_wow.config"
+
+if [[ -z "$1" || "$1" == "-h" || "$1" == "--help" ]]; then
+  echo "Usage: $0 <config_name>"
+  echo "This script requires a \`launch_wow.config\` file to be setup:"
+  echo "  ${HOME}/.secrets/launch_wow.config"
+  echo "See README.md for details"
+  exit 0
+fi
+
+if [[ ! -f "$CONFIG" ]]; then
+  echo "Configuration file not found: $CONFIG"
+  exit 1
+fi
+
+INFO=$1
+
 L=$(grep -Fin $INFO $CONFIG | head -1 | cut --delimiter=":" --fields=1)
 INFO=$(sed -n ${L}p $CONFIG)
 L=$((L+1))

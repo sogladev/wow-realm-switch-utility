@@ -16,13 +16,12 @@ the credentials as you would on a keyboard with `xdotool` after a set delay to
 the window with focus.
 
 ## Setup
-3 files need to be setup: `.bash_alias`, a `launch_wow.sh` script and `launch_wow.config` script.
+3 files need to be setup: `.bash_alias`, a `launch_wow.sh` script and `launch_wow.config`.
 
-Adding or removing requires setting up a new alias and adding the configuration to the config file.
+Adding or removing a server requires setting up a new alias to `.bash_alias` and adding the configuration to `launch_wow.config`.
 
 ### `launch_wow.config`
 Each line respectively contains: description, game_folder, realmlist_rel_path, launch_cmd, realmlist, username, passwd
-
 
 ```
 Local <-- string to reference in launch_wow.sh
@@ -42,7 +41,7 @@ Find game ID (for `rungameid/2`) with
  ```
 
 ### `.bash_aliases`
-Set a 2nd argument to skip writing realmlist. `.launch_wow.config` must contain a line for 
+Set a 2nd argument to skip writing realmlist. `.launch_wow.config` must contain a line for
 ```
 alias WOWL="${HOME}/scripts/launch_wow.sh Local"
 alias WOWM="${HOME}/scripts/launch_wow.sh Mistblade skip_write_realmlist"
