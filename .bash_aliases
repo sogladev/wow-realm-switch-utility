@@ -1,6 +1,7 @@
-alias WOWC="${HOME}/scripts/wow_launch.sh Chromiecraft"
-alias WOWCHD="${HOME}/scripts/wow_launch.sh ChromiecraftHD"
-alias WOWL="${HOME}/scripts/wow_launch.sh Local"
-alias WOWLHD="${HOME}/scripts/wow_launch.sh LocalHD"
-alias WOWLC="${HOME}/scripts/wow_launch.sh CMangos"
-alias WOWLT="${HOME}/scripts/wow_launch.sh Trinity"
+wow_vs() {
+    "$HOME/.local/bin/wow_version_switcher" "--config" "~/.config/wow_version_switcher/config.toml" "$@"
+}
+alias WOWC='wow_vs Chromiecraft'
+alias WOWCHD='wow_vs ChromiecraftHD'
+alias WOWL='wow_vs Local'
+alias WOWL2='wow_vs Local2'
