@@ -1,0 +1,14 @@
+[Local]
+directory = "~/Games/wow335"
+realmlist_rel_path = "Data/enUS/realmlist.wtf"
+launch_cmd = "lutris lutris:rungameid/1"
+realmlist = "127.0.0.1"
+clear_cache = true
+username = "username"
+password = "password"
+
+[Chromiecraft]
+directory = "~/Games/wow335"
+realmlist_rel_path = "Data/enUS/realmlist.wtf"
+launch_cmd = "lutris lutris:rungameid/1"
+realmlist = "logon.chromiecraft.com"
