@@ -1,5 +1,14 @@
-# Wow version launcher
+# Wow realm switcher
 This project allows to set aliases in (`.bash_aliases`, `.zsh_aliases`, ...) to load a config and launch the chosen version of wow, set realmlist and ~~auto-login~~ (NYI)
+
+```mermaid
+graph TD;
+    cmd-->.bash_aliases-->wow_version_switcher--set realmlist-->wow.exe--sleep-->type_credentials
+    config.toml-->wow_version_switcher
+    config.toml[(config.toml)]
+        type_credentials["type_credentials (NYI)"]
+    cmd[$ WOWC]
+```
 
 ## Usage
 
