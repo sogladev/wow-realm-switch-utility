@@ -33,7 +33,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Setup Rust
       uses: dtolnay/rust-toolchain@stable
       with:
@@ -58,6 +58,7 @@ jobs:
         name: ${{ matrix.artifact_name }}
         path: ./${{ matrix.os == 'windows-latest' && matrix.asset_name || matrix.artifact_name }}
         if-no-files-found: error
+        retention-days: 3
 
   create-release:
     needs: build
