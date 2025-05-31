@@ -1,4 +1,4 @@
-# Wow realm switcher
+# Wow realm switch utility
 This project allows to set aliases in (`.bash_aliases`, `.zsh_aliases`, ...) to load a config and launch the chosen version of wow, set realmlist and ~~auto-login~~ (NYI)
 
 ```mermaid
@@ -38,23 +38,29 @@ Launching with command:
 ```
 
 ## Setup
-3 files are need to be setup: alias config (`.bash_aliases`, `.zsh_aliases`, ...), a `wow_version_switcher` binary and `config.toml`.
+3 files are required:
 
-configuration examples in `config.toml`
-```
+1. alias config (`.bash_aliases`, `.zsh_aliases`, ...)
+2. a `wow_version_switcher` binary
+3. configuration file `config.toml`.
+
+### Example `config.toml`
+
+```toml
 [Local]
 directory = "~/Games/wow335"
 realmlist_rel_path = "Data/enUS/realmlist.wtf"
 executable = "Wow.exe" # optional, defaults to "Wow.exe"
-launch_cmd = "lutris lutris:rungameid/1", # optional, defaults to wine with prefix in directory/.wine or executable on windows
+launch_cmd = "lutris lutris:rungameid/1" # optional, defaults to wine with prefix in directory/.wine or executable on windows
 realmlist = "127.0.0.1" # expands to `set realmlist 127.0.0.1`
 clear_cache = true # optional, removes .Cache folder
 username = "username" # optional, prints to console
 password = "password" # optional, prints to console and writes to clipboard (experimental)
 ```
 
-alias setup
-```
+### Example alias setup
+
+```sh
 wow_vs() {
     "$HOME/.local/bin/wow_version_switcher" "--config" "~/.config/wow_version_switcher/config.toml" "$@"
 }
@@ -62,12 +68,8 @@ alias WOWC='wow_vs Chromiecraft'
 alias WOWL='wow_vs Local'
 ```
 
-binary
-see Releases or build with cargo
+### Building the binary
 
-## Build
-
-```
+```sh
 cargo build --release
 ```
-
