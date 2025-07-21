@@ -1,5 +1,5 @@
 use clap::Parser;
-use wow_version_switcher::{write_realmlist, launch, load_config};
+use wow_version_switcher::{launch, load_config, write_realmlist};
 
 /// Wow version switcher
 #[derive(Parser)]
@@ -15,9 +15,14 @@ fn main() -> anyhow::Result<()> {
     let args = Args::parse();
     println!("Loading configuration for:\n\t{}", args.game);
 
-    let game_cfg = load_config( &args.config, &args.game)?;
+    let game_cfg = load_config(&args.config, &args.game)?;
 
-    write_realmlist(&game_cfg.directory, &game_cfg.realmlist_rel_path, &game_cfg.realmlist)?;
+    if let (Some(realmlist), Some(realmlist_rel_path)) =
+        (&game_cfg.realmlist, &game_cfg.realmlist_rel_path)
+    {
+        write_realmlist(&game_cfg.directory, realmlist_rel_path, realmlist)?;
+    }
+
     launch(&game_cfg).expect("Failed to launch game");
     Ok(())
 }
