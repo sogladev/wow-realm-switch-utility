@@ -1,16 +1,17 @@
 use serde::Deserialize;
-mod clipboard;
+use std::collections::HashMap;
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Config {
     pub directory: std::path::PathBuf,
     #[serde(default = "default_executable")]
     pub executable: String,
-    pub realmlist_rel_path: String,
     pub launch_cmd: Option<String>,
-    pub realmlist: String,
-    pub username: Option<String>,
+    pub realmlist: Option<String>,
+    pub realmlist_rel_path: Option<String>,
+    pub account: Option<String>,
     pub password: Option<String>,
+    pub accounts: Option<HashMap<String, String>>,
     pub clear_cache: Option<bool>,
 }
 
@@ -134,10 +135,7 @@ pub fn launch(config: &Config) -> std::io::Result<()> {
     }
 
     // Verify executable exists
-    let executable_path = config.directory.join(
-        &config.executable
-            .clone()
-    );
+    let executable_path = config.directory.join(&config.executable.clone());
     if !executable_path.exists() {
         return Err(std::io::Error::new(
             std::io::ErrorKind::NotFound,
@@ -145,13 +143,37 @@ pub fn launch(config: &Config) -> std::io::Result<()> {
         ));
     }
 
-    // Write username and password
-    if let Some(user) = &config.username {
-        println!("Account Name:\n\t{}", user);
+    // Collect all accounts
+    let mut all_accounts: Vec<(String, String)> = vec![];
+    if let (Some(account), Some(password)) = (&config.account, &config.password) {
+        all_accounts.push((account.clone(), password.clone()));
     }
-    if let Some(password) = &config.password {
-        println!("Password:\n\t{}", password);
-        clipboard::to_clipboard(&password).unwrap();
+    if let Some(accounts) = &config.accounts {
+        for (account, password) in accounts {
+            all_accounts.push((account.clone(), password.clone()));
+        }
+    }
+    // Display accounts and copy first password to clipboard
+    if all_accounts.len() == 1 {
+        let (account, password) = &all_accounts[0];
+        println!("Account\n\t{} / {}", account, password);
+    } else if !all_accounts.is_empty() {
+        let default_account_width = 12;
+        let max_account_len = all_accounts
+            .iter()
+            .map(|(account, _)| account.len())
+            .max()
+            .unwrap_or(default_account_width);
+        println!("Accounts:");
+        for (i, (account, password)) in all_accounts.iter().enumerate() {
+            println!(
+                "\t{}. {:<width$} / {}",
+                i + 1,
+                account,
+                password,
+                width = max_account_len,
+            );
+        }
     }
 
     // Launch the game

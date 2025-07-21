@@ -26,13 +26,12 @@ Options:
 ```
 $ WOWC
 Loading configuration for:
-        Chromiecraft
+        chromiecraft
 Realmlist set to:
         set realmlist to logon.chromiecraft.com
-Account Name:
-        accountname
-Password:
-        xxxxxxxxxxxxxxxx
+Accounts:
+        1. aaaaaaa / cccc
+        2. bbbbb   / dddd
 Launching with command:
         lutris lutris:rungameid/1
 ```
@@ -54,8 +53,11 @@ executable = "Wow.exe" # optional, defaults to "Wow.exe"
 launch_cmd = "lutris lutris:rungameid/1" # optional, defaults to wine with prefix in directory/.wine or executable on windows
 realmlist = "127.0.0.1" # expands to `set realmlist 127.0.0.1`
 clear_cache = true # optional, removes .Cache folder
-username = "username" # optional, prints to console
+account = "account" # optional, prints to console
 password = "password" # optional, prints to console and writes to clipboard (experimental)
+# Multiple accounts as a dictionary (account = password)
+accounts.main = "password1"
+accounts.alt = "password2"
 ```
 
 ### Example alias setup
