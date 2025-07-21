@@ -20,7 +20,7 @@ fn main() -> anyhow::Result<()> {
     if let (Some(realmlist), Some(realmlist_rel_path)) =
         (&game_cfg.realmlist, &game_cfg.realmlist_rel_path)
     {
-        write_realmlist(&game_cfg.directory, &realmlist_rel_path, &realmlist)?;
+        write_realmlist(&game_cfg.directory, realmlist_rel_path, realmlist)?;
     }
 
     launch(&game_cfg).expect("Failed to launch game");

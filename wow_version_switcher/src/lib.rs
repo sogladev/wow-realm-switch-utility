@@ -27,7 +27,7 @@ pub fn load_config(path_str: &String, game: &String) -> std::io::Result<Config> 
     let s = std::fs::read_to_string(config_path).map_err(|_| {
         std::io::Error::new(
             std::io::ErrorKind::NotFound,
-            format!("Config file not found: {}", path_str),
+            format!("Config file not found: {path_str}"),
         )
     })?;
 
@@ -45,7 +45,7 @@ pub fn load_config(path_str: &String, game: &String) -> std::io::Result<Config> 
         .ok_or_else(|| {
             std::io::Error::new(
                 std::io::ErrorKind::NotFound,
-                format!("Config with key '{}' not found (case-insensitive)", game),
+                format!("Config with key '{game}' not found (case-insensitive)"),
             )
         })?;
 
@@ -67,15 +67,14 @@ pub fn write_realmlist(
     realmlist: &str,
 ) -> std::io::Result<()> {
     let realmlist_path = game_folder.join(rel_path);
-    let realmlist_fmt = format!("set realmlist to {}", realmlist);
-    std::fs::write(&realmlist_path, &realmlist_fmt).map_err(|e| {
+    let realmlist_fmt = format!("set realmlist to {realmlist}");
+    std::fs::write(&realmlist_path, &realmlist_fmt).inspect_err(|e| {
         eprintln!(
-            "Realmlist not writable, check path: {}",
+            "{e} Realmlist not writable, check path: {}",
             realmlist_path.display()
         );
-        e
     })?;
-    println!("Realmlist set to:\n\t{}", realmlist_fmt);
+    println!("Realmlist set to:\n\t{realmlist_fmt}");
     Ok(())
 }
 
@@ -90,7 +89,7 @@ pub fn verify_game_integrity(game_dir: &std::path::Path) -> Result<bool, std::io
     for dir in required_dirs.iter() {
         let dir_path = game_dir.join(dir);
         if !dir_path.is_dir() {
-            println!("Missing required directory: {}", dir);
+            println!("Missing required directory: {dir}");
             return Ok(false);
         }
     }
@@ -99,7 +98,7 @@ pub fn verify_game_integrity(game_dir: &std::path::Path) -> Result<bool, std::io
     for file in required_files.iter() {
         let file_path = game_dir.join(file);
         if !file_path.is_file() {
-            println!("Missing required file: {}", file);
+            println!("Missing required file: {file}");
             return Ok(false);
         }
     }
@@ -118,7 +117,7 @@ fn clear_cache(game_dir: &std::path::Path) -> std::io::Result<()> {
             println!("Cache directory does not exist, nothing to remove.");
         }
         Err(e) => {
-            eprintln!("Failed to check if cache directory exists: {}", e);
+            eprintln!("Failed to check if cache directory exists: {e}");
             return Err(e);
         }
     }
@@ -135,7 +134,7 @@ pub fn launch(config: &Config) -> std::io::Result<()> {
     }
 
     // Verify executable exists
-    let executable_path = config.directory.join(&config.executable.clone());
+    let executable_path = config.directory.join(config.executable.clone());
     if !executable_path.exists() {
         return Err(std::io::Error::new(
             std::io::ErrorKind::NotFound,
@@ -153,10 +152,10 @@ pub fn launch(config: &Config) -> std::io::Result<()> {
             all_accounts.push((account.clone(), password.clone()));
         }
     }
-    // Display accounts and copy first password to clipboard
+    // Display accounts and passwords
     if all_accounts.len() == 1 {
         let (account, password) = &all_accounts[0];
-        println!("Account\n\t{} / {}", account, password);
+        println!("Account\n\t{account} / {password}");
     } else if !all_accounts.is_empty() {
         let default_account_width = 12;
         let max_account_len = all_accounts
@@ -187,7 +186,7 @@ pub fn launch(config: &Config) -> std::io::Result<()> {
                     executable_path.to_string_lossy()
                 )
             });
-            println!("Launching with command:\n\t{}", command);
+            println!("Launching with command:\n\t{command}");
             std::process::Command::new("setsid")
                 .arg("sh")
                 .arg("-c")
@@ -198,10 +197,7 @@ pub fn launch(config: &Config) -> std::io::Result<()> {
             std::process::Command::new(executable_path).spawn()?;
         }
         _ => {
-            return Err(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "Unsupported platform",
-            ));
+            return Err(std::io::Error::other("Unsupported platform"));
         }
     }
     Ok(())
