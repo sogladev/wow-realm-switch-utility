@@ -28,7 +28,7 @@ $ WOWC
 Loading configuration for:
         chromiecraft
 Realmlist set to:
-        set realmlist to logon.chromiecraft.com
+        set realmlist logon.chromiecraft.com
 Accounts:
         1. aaaaaaa / cccc
         2. bbbbb   / dddd
