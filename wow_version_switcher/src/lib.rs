@@ -12,6 +12,7 @@ pub struct Config {
     pub account: Option<String>,
     pub password: Option<String>,
     pub accounts: Option<HashMap<String, String>>,
+    pub arguments: Option<String>,
     pub clear_cache: Option<bool>,
 }
 
@@ -178,7 +179,7 @@ pub fn launch(config: &Config) -> std::io::Result<()> {
     // Launch the game
     match std::env::consts::OS {
         "linux" => {
-            let command: String = config.launch_cmd.clone().unwrap_or_else(|| {
+            let mut command: String = config.launch_cmd.clone().unwrap_or_else(|| {
                 let wine_prefix_path = config.directory.join(".wine");
                 format!(
                     "WINEPREFIX=\"{}\" wine \"{}\"",
@@ -186,6 +187,11 @@ pub fn launch(config: &Config) -> std::io::Result<()> {
                     executable_path.to_string_lossy()
                 )
             });
+            if let Some(args) = &config.arguments
+                && !args.trim().is_empty()
+            {
+                command = format!("{command} {args}");
+            }
             println!("Launching with command:\n\t{command}");
             std::process::Command::new("setsid")
                 .arg("sh")
@@ -194,7 +200,19 @@ pub fn launch(config: &Config) -> std::io::Result<()> {
                 .spawn()?;
         }
         "windows" => {
-            std::process::Command::new(executable_path).spawn()?;
+            if let Some(args) = &config.arguments {
+                if !args.trim().is_empty() {
+                    let cmd_string = format!("\"{}\" {}", executable_path.to_string_lossy(), args);
+                    std::process::Command::new("cmd")
+                        .arg("/C")
+                        .arg(cmd_string)
+                        .spawn()?;
+                } else {
+                    std::process::Command::new(executable_path).spawn()?;
+                }
+            } else {
+                std::process::Command::new(executable_path).spawn()?;
+            }
         }
         _ => {
             return Err(std::io::Error::other("Unsupported platform"));
