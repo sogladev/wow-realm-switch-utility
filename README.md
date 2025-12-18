@@ -3,11 +3,11 @@ This project allows to set aliases in (`.bash_aliases`, `.zsh_aliases`, ...) to 
 
 ```mermaid
 graph TD;
-    cmd-->.bash_aliases-->wow_version_switcher--set realmlist-->wow.exe--sleep-->type_credentials
+    cmd-->.bash_aliases-->wow_version_switcher-->do_config-->wow.exe
     config.toml-->wow_version_switcher
     config.toml[(config.toml)]
-        type_credentials["type_credentials (NYI)"]
     cmd[$ WOWC]
+    do_config([set realmlist, clear cache])
 ```
 
 ## Usage
