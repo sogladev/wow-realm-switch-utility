@@ -280,8 +280,9 @@ wtf = "workspace"
 
 ```sh
 wow_vs() {
-    "$HOME/.local/bin/wowctl" "$@"
+    "$HOME/.local/bin/wowctl" "launch" "$@" "--config" "~/.config/wowctl/config.toml"
 }
+
 alias WOWC='wow_vs launch Chromiecraft'
 alias WOWL='wow_vs launch Local'
 alias WOWAC1='wow_vs launch AC-Realm1'
