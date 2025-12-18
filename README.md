@@ -1,5 +1,5 @@
 # Wow realm switch utility
-This project allows to set aliases in (`.bash_aliases`, `.zsh_aliases`, ...) to load a config and launch the chosen version of wow, set realmlist and ~~auto-login~~ (NYI)
+This project allows to set aliases in (`.bash_aliases`, `.zsh_aliases`, ...) to load a config and launch the chosen version of wow, set realmlist and auto-login
 
 ```mermaid
 graph TD;
@@ -51,6 +51,7 @@ directory = "~/Games/wow335"
 realmlist_rel_path = "Data/enUS/realmlist.wtf"
 executable = "Wow.exe" # optional, defaults to "Wow.exe"
 launch_cmd = "lutris lutris:rungameid/1" # optional, defaults to wine with prefix in directory/.wine or executable on windows
+arguments = '-login "account" -password "password" -realmlist "logon.chromiecraft.com"' # optional
 realmlist = "127.0.0.1" # expands to `set realmlist 127.0.0.1`
 clear_cache = true # optional, removes .Cache folder
 account = "account" # optional, prints to console
@@ -69,6 +70,22 @@ wow_vs() {
 alias WOWC='wow_vs Chromiecraft'
 alias WOWL='wow_vs Local'
 ```
+
+### Auto-login
+
+requires: [AwesomeWotlk](https://github.com/NoM0Re/awesome_wotlk), which provides support for auto-login and other enhancements.
+
+The `wow_version_switcher` supports auto-login through the `arguments` field in the `config.toml` file. These arguments allow you to pass login credentials and realmlist settings directly to the game executable.
+
+Example configuration:
+```toml
+arguments = '-login "account_name" -password "your_password" -realmlist "logon.chromiecraft.com"'
+```
+
+If you are using Lutris, instead of setting `arguments` in the `config.toml` file, you can configure them directly in Lutris:
+1. Open the game in Lutris.
+2. Navigate to `Game Options`.
+3. Set the desired arguments under the `Arguments` field.
 
 ### Building the binary
 
