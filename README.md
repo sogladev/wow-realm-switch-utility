@@ -11,7 +11,7 @@ graph TD;
     do_config([set realmlist, clear cache])
 ```
 
-**New in 0.3.0**: Support for shared base installations with workspaces. Create multiple lightweight WoW configurations from a single 17GB base client.
+**New in 0.4.0**: Support for shared base installations with workspaces. Create multiple lightweight WoW configurations from a single 17GB base client.
 
 ```mermaid
 graph LR
@@ -177,7 +177,7 @@ accounts.main = "password1"
 accounts.alt = "password2"
 ```
 
-### Workspace-Based Setup (New in 0.3.0)
+### Workspace-Based Setup (New in 0.4.0)
 
 ⚠️ Currently, only 335 and 112 clients are supported.
 
