@@ -622,6 +622,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "69cdb34c158ceb288df11e18b4bd39de994f6657d83847bdffdbd7f346754b0f"
 
 [[package]]
+name = "realmctl"
+version = "0.3.0"
+dependencies = [
+ "anyhow",
+ "arboard",
+ "clap",
+ "crc32fast",
+ "regex",
+ "serde",
+ "shellexpand",
+ "tempfile",
+ "toml",
+]
+
+[[package]]
 name = "redox_syscall"
 version = "0.5.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -990,21 +1005,6 @@ name = "wit-bindgen"
 version = "0.46.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f17a85883d4e6d00e8a97c586de764dabcc06133f7f1d55dce5cdc070ad7fe59"
-
-[[package]]
-name = "realmctl"
-version = "0.3.0"
-dependencies = [
- "anyhow",
- "arboard",
- "clap",
- "crc32fast",
- "regex",
- "serde",
- "shellexpand",
- "tempfile",
- "toml",
-]
 
 [[package]]
 name = "x11rb"

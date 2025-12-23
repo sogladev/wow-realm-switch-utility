@@ -113,6 +113,12 @@ Options:
 
 ### Workspace Management
 
+> **Feature flag:** Workspace commands (`create`, `clean`, `fix`) are optional and controlled by the Cargo feature `workspaces` (enabled by default). To compile without workspace support run:
+>
+> ```bash
+> cargo build --no-default-features --package realmctl
+> ```
+>
 Create workspaces from a shared base to avoid duplicating 17GB clients:
 
 ```bash

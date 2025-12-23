@@ -31,6 +31,8 @@ pub enum Commands {
         #[arg(long, default_value = "chromie-3.3.5a")]
         profile: String,
     },
+
+    #[cfg(feature = "workspaces")]
     /// Create a new workspace from a base installation
     Create {
         /// Name of the workspace
@@ -45,6 +47,7 @@ pub enum Commands {
         #[arg(long, default_value = "~/.local/share/wow_workspaces")]
         workspace_root: String,
     },
+    #[cfg(feature = "workspaces")]
     /// Clean ephemeral files (cache, logs) from a workspace
     Clean {
         /// Workspace name to clean (as in your config file)
@@ -56,6 +59,7 @@ pub enum Commands {
         #[arg(long)]
         wdb: bool,
     },
+    #[cfg(feature = "workspaces")]
     /// Repair a workspace's shared links and directories
     Fix {
         /// Workspace name to fix (as in your config file)
@@ -75,6 +79,7 @@ impl Cli {
             Commands::InitBase { path, profile } => {
                 cmd_init_base(&path, &profile)?;
             }
+            #[cfg(feature = "workspaces")]
             Commands::Create {
                 workspace,
                 base,
@@ -83,6 +88,7 @@ impl Cli {
             } => {
                 cmd_create_workspace(&workspace, &base, &share, &workspace_root)?;
             }
+            #[cfg(feature = "workspaces")]
             Commands::Clean {
                 workspace,
                 config,
@@ -90,6 +96,7 @@ impl Cli {
             } => {
                 cmd_clean(&workspace, &config, wdb)?;
             }
+            #[cfg(feature = "workspaces")]
             Commands::Fix { workspace, config } => {
                 cmd_fix(&workspace, &config)?;
             }
@@ -164,6 +171,7 @@ fn cmd_init_base(path: &Path, profile_name: &str) -> Result<()> {
     Ok(())
 }
 
+#[cfg(feature = "workspaces")]
 fn cmd_create_workspace(
     name: &str,
     base: &str,
@@ -218,6 +226,7 @@ fn cmd_create_workspace(
     Ok(())
 }
 
+#[cfg(feature = "workspaces")]
 fn cmd_fix(workspace: &str, config_path: &str) -> Result<()> {
     println!("Fixing workspace: {}", workspace);
 
@@ -230,6 +239,7 @@ fn cmd_fix(workspace: &str, config_path: &str) -> Result<()> {
     Ok(())
 }
 
+#[cfg(feature = "workspaces")]
 fn cmd_clean(workspace: &str, config_path: &str, clean_wdb: bool) -> Result<()> {
     println!("Cleaning workspace: {}", workspace);
 

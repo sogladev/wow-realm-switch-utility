@@ -1,5 +1,7 @@
 pub mod base;
 pub mod cli;
+
+#[cfg(feature = "workspaces")]
 pub mod workspace;
 
 use serde::Deserialize;
