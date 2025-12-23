@@ -3,9 +3,9 @@ This project allows to set aliases in (`.bash_aliases`, `.zsh_aliases`, ...) to 
 
 ```mermaid
 graph TD;
-    cmd-->.bash_aliases-->wowctl-->do_config-->wow.exe
-    config.toml-->wowctl
-    wowctl[wowctl launch]
+    cmd-->.bash_aliases-->realmctl-->do_config-->wow.exe
+    config.toml-->realmctl
+    realmctl[realmctl launch]
     config.toml[(config.toml)]
     cmd[$ WOWC]
     do_config([set realmlist, clear cache])
@@ -96,7 +96,7 @@ graph LR
 ### Commands
 
 ```zsh
-Usage: wowctl <COMMAND>
+Usage: realmctl <COMMAND>
 
 Commands:
   launch     Launch a WoW workspace
@@ -117,17 +117,17 @@ Create workspaces from a shared base to avoid duplicating 17GB clients:
 
 ```bash
 # 1. Initialize a base installation (one-time setup)
-wowctl init-base ~/Games/WoW/Base335a --profile chromie-3.3.5a
+realmctl init-base ~/Games/WoW/Base335a --profile chromie-3.3.5a
 
 # 2. Create workspaces from the base
-wowctl create stock-ac --base ~/Games/WoW/Base335a
-wowctl create chromie --base ~/Games/WoW/Base335a
+realmctl create stock-ac --base ~/Games/WoW/Base335a
+realmctl create chromie --base ~/Games/WoW/Base335a
 
 # 3. Launch a workspace
-wowctl launch Chromie
+realmctl launch Chromie
 
 # 4. Clean workspace cache/logs
-wowctl clean Chromie
+realmctl clean Chromie
 ```
 
 ```
@@ -150,7 +150,7 @@ Launching with command:
 3 files are required:
 
 1. alias config (`.bash_aliases`, `.zsh_aliases`, ...)
-2. a `wowctl` binary
+2. a `realmctl` binary
 3. configuration file `config.toml`.
 
 ### Example `config.toml`
@@ -182,7 +182,7 @@ For users who want to manage multiple WoW configurations with different patches/
 
 
 ```bash
-wowctl init-base ~/Games/WoW/Base335a --profile chromie-3.3.5a
+realmctl init-base ~/Games/WoW/Base335a --profile chromie-3.3.5a
 ```
 
 This will:
@@ -204,13 +204,13 @@ This will:
 
 ```bash
 # Create a stock AzerothCore workspace
-wowctl create stock-ac --base ~/Games/WoW/Base335a
+realmctl create stock-ac --base ~/Games/WoW/Base335a
 
 # Create a Chromie workspace with custom patches
-wowctl create chromie --base ~/Games/WoW/Base335a
+realmctl create chromie --base ~/Games/WoW/Base335a
 
 # Custom sharing rules
-wowctl create test-realm \
+realmctl create test-realm \
   --base ~/Games/WoW/Base335a \
   --share screenshots=global \
   --share interface=base \
@@ -254,9 +254,9 @@ arguments = '-login "myaccount" -password "mypass"'
 
 ### Separation of responsibilities
 
-Workspace lifecycle (initialization, creation, sharing configuration, and cleanup) is managed exclusively by the `wowctl` CLI. The `config.toml` file is intentionally simple: it is only for *launch targets* and should point to an existing directory (either a standalone installation or a workspace directory created with `wowctl create`). Do **not** put workspace creation or sharing rules in `config.toml` — those belong to the workspace metadata managed by `wowctl`.
+Workspace lifecycle (initialization, creation, sharing configuration, and cleanup) is managed exclusively by the `realmctl` CLI. The `config.toml` file is intentionally simple: it is only for *launch targets* and should point to an existing directory (either a standalone installation or a workspace directory created with `realmctl create`). Do **not** put workspace creation or sharing rules in `config.toml` — those belong to the workspace metadata managed by `realmctl`.
 
-Each workspace created by `wowctl create` stores its metadata in `workspace.toml` inside the workspace directory. Example `workspace.toml` (do not edit manually):
+Each workspace created by `realmctl create` stores its metadata in `workspace.toml` inside the workspace directory. Example `workspace.toml` (do not edit manually):
 
 ```toml
 profile = "chromie-3.3.5a"
@@ -280,7 +280,7 @@ wtf = "workspace"
 
 ```sh
 wow_vs() {
-    "$HOME/.local/bin/wowctl" "launch" "$@" "--config" "~/.config/wowctl/config.toml"
+    "$HOME/.local/bin/realmctl" "launch" "$@" "--config" "~/.config/realmctl/config.toml"
 }
 
 alias WOWC='wow_vs launch Chromiecraft'
@@ -293,7 +293,7 @@ alias WOWAC2='wow_vs launch AC-Realm2'
 
 requires: [AwesomeWotlk](https://github.com/NoM0Re/awesome_wotlk), which provides support for auto-login and other enhancements.
 
-The `wowctl` supports auto-login through the `arguments` field in the `config.toml` file. These arguments allow you to pass login credentials and realmlist settings directly to the game executable.
+The `realmctl` supports auto-login through the `arguments` field in the `config.toml` file. These arguments allow you to pass login credentials and realmlist settings directly to the game executable.
 
 Example configuration:
 ```toml
@@ -370,11 +370,11 @@ Launch with: `WOWAC1`, `WOWAC2`, `WOWC` (using your aliases)
 ### Building the binary
 
 ```sh
-cd wowctl
+cd realmctl
 cargo build --release
 ```
 
-The binary will be at `target/release/wowctl`
+The binary will be at `target/release/realmctl`
 
 ## Contributing
 

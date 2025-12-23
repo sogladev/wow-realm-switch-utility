@@ -6,7 +6,7 @@ use crate::{launch, load_config, write_realmlist};
 
 /// WoW Client Manager - manage multiple WoW clients with shared resources
 #[derive(Parser)]
-#[command(name = "wowctl")]
+#[command(name = "realmctl")]
 #[command(version, about, long_about = None)]
 pub struct Cli {
     #[command(subcommand)]
@@ -20,7 +20,7 @@ pub enum Commands {
         /// Workspace name to launch (as in your config file)
         workspace: String,
         /// Path to your config.toml
-        #[arg(long, default_value = "~/.config/wowctl/config.toml")]
+        #[arg(long, default_value = "~/.config/realmctl/config.toml")]
         config: String,
     },
     /// Initialize a base WoW installation for workspace creation
@@ -50,7 +50,7 @@ pub enum Commands {
         /// Workspace name to clean (as in your config file)
         workspace: String,
         /// Path to your config.toml
-        #[arg(long, default_value = "~/.config/wowctl/config.toml")]
+        #[arg(long, default_value = "~/.config/realmctl/config.toml")]
         config: String,
         /// Also clean WDB cache files
         #[arg(long)]
@@ -61,7 +61,7 @@ pub enum Commands {
         /// Workspace name to fix (as in your config file)
         workspace: String,
         /// Path to your config.toml
-        #[arg(long, default_value = "~/.config/wowctl/config.toml")]
+        #[arg(long, default_value = "~/.config/realmctl/config.toml")]
         config: String,
     },
 }
