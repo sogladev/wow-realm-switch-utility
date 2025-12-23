@@ -24,12 +24,12 @@ jobs:
         include:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            artifact_name: wow_version_switcher-linux
-            asset_name: wow_version_switcher-linux
+            artifact_name: realmctl-linux
+            asset_name: realmctl-linux
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            artifact_name: wow_version_switcher-windows
-            asset_name: wow_version_switcher-windows.exe
+            artifact_name: realmctl-windows
+            asset_name: realmctl-windows.exe
 
     steps:
     - uses: actions/checkout@v4
@@ -40,16 +40,16 @@ jobs:
         targets: ${{ matrix.target }}
 
     - name: Build
-      working-directory: ./wow_version_switcher
+      working-directory: ./realmctl
       run: cargo build --release --target ${{ matrix.target }}
 
     - name: Copy binary (Linux)
       if: matrix.os == 'ubuntu-latest'
-      run: cp ./wow_version_switcher/target/${{ matrix.target }}/release/wow_version_switcher ./${{ matrix.artifact_name }}
+      run: cp ./realmctl/target/${{ matrix.target }}/release/realmctl ./${{ matrix.artifact_name }}
 
     - name: Copy binary (Windows)
       if: matrix.os == 'windows-latest'
-      run: copy .\wow_version_switcher\target\${{ matrix.target }}\release\wow_version_switcher.exe .\${{ matrix.asset_name }}
+      run: copy .\realmctl\target\${{ matrix.target }}\release\realmctl.exe .\${{ matrix.asset_name }}
       shell: cmd
 
     - name: Upload artifact
@@ -82,5 +82,5 @@ jobs:
           name: Release ${{ steps.date.outputs.date }}
           draft: true
           files: |
-            wow_version_switcher-linux/wow_version_switcher-linux
-            wow_version_switcher-windows/wow_version_switcher-windows.exe
+            realmctl-linux/realmctl-linux
+            realmctl-windows/realmctl-windows.exe

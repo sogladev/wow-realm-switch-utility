@@ -1,3 +1,9 @@
+pub mod base;
+pub mod cli;
+
+#[cfg(feature = "workspaces")]
+pub mod workspace;
+
 use serde::Deserialize;
 use std::collections::HashMap;
 
@@ -21,7 +27,7 @@ fn default_executable() -> String {
 }
 
 /// Load the whole config file (TOML)
-pub fn load_config(path_str: &String, game: &String) -> std::io::Result<Config> {
+pub fn load_config(path_str: &str, game: &str) -> std::io::Result<Config> {
     let config_path = shellexpand::tilde(path_str).to_string();
     let config_path = std::path::PathBuf::from(config_path);
 
@@ -77,34 +83,6 @@ pub fn write_realmlist(
     })?;
     println!("Realmlist set to:\n\t{realmlist_fmt}");
     Ok(())
-}
-
-/// Verifies the integrity of a game installation by checking for required files and directories.
-/// @todo: implement other client versions besides 3.3.5a
-#[allow(dead_code)]
-pub fn verify_game_integrity(game_dir: &std::path::Path) -> Result<bool, std::io::Error> {
-    let required_files = ["Battle.net.dll", "Data/lichking.MPQ", "Data/patch-3.MPQ"];
-    let required_dirs = ["Data"];
-
-    // Check required directories
-    for dir in required_dirs.iter() {
-        let dir_path = game_dir.join(dir);
-        if !dir_path.is_dir() {
-            println!("Missing required directory: {dir}");
-            return Ok(false);
-        }
-    }
-
-    // Check required files
-    for file in required_files.iter() {
-        let file_path = game_dir.join(file);
-        if !file_path.is_file() {
-            println!("Missing required file: {file}");
-            return Ok(false);
-        }
-    }
-
-    Ok(true)
 }
 
 fn clear_cache(game_dir: &std::path::Path) -> std::io::Result<()> {
@@ -188,10 +166,9 @@ pub fn launch(config: &Config) -> std::io::Result<()> {
                 )
             });
             if let Some(args) = &config.arguments
-                && !args.trim().is_empty()
-            {
-                command = format!("{command} {args}");
-            }
+                && !args.trim().is_empty() {
+                    command = format!("{command} {args}");
+                }
             println!("Launching with command:\n\t{command}");
             std::process::Command::new("setsid")
                 .arg("sh")

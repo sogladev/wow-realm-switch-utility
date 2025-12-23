@@ -1,5 +1,5 @@
 wow_vs() {
-    "$HOME/.local/bin/wow_version_switcher" "--config" "~/.config/wow_version_switcher/config.toml" "$@"
+    "$HOME/.local/bin/realmctl" "--config" "~/.config/realmctl/config.toml" "$@"
 }
 alias WOWC='wow_vs Chromiecraft'
 alias WOWCHD='wow_vs ChromiecraftHD'
