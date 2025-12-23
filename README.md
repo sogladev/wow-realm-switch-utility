@@ -1,4 +1,4 @@
-# Wow realm switch utility
+# Realmctl
 This project allows to set aliases in (`.bash_aliases`, `.zsh_aliases`, ...) to load a config and launch the chosen version of wow, set realmlist and auto-login.
 
 ```mermaid
